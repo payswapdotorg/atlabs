@@ -423,7 +423,14 @@ const grantCreditPool = (
 /* Account profile store (user_profile/)                              */
 /* ------------------------------------------------------------------ */
 
-let PROFILE_FIXTURE: AccountProfile = {
+/**
+ * Profile edits persist to localStorage ("atlabs:user-profile") so the
+ * PUT flow survives reloads — same idea as the localStorage "user" auth
+ * store, scoped to this module.
+ */
+const PROFILE_STORAGE_KEY = 'atlabs:user-profile'
+
+const defaultProfile: AccountProfile = {
   first_name: 'yaslen',
   last_name: 'Catty',
   name: 'yaslen Catty',
@@ -444,6 +451,34 @@ let PROFILE_FIXTURE: AccountProfile = {
   current_subscription: null,
 }
 
+const readStoredProfile = (): AccountProfile => {
+  try {
+    const raw = window.localStorage.getItem(PROFILE_STORAGE_KEY)
+    if (!raw) return defaultProfile
+    const stored = JSON.parse(raw) as Partial<AccountProfile>
+    return {
+      ...defaultProfile,
+      ...stored,
+      notification_preferences: {
+        ...defaultProfile.notification_preferences,
+        ...(stored.notification_preferences ?? {}),
+      },
+    }
+  } catch {
+    return defaultProfile
+  }
+}
+
+const persistProfile = (): void => {
+  try {
+    window.localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(PROFILE_FIXTURE))
+  } catch {
+    // Storage unavailable — in-memory fixture still works for this session.
+  }
+}
+
+let PROFILE_FIXTURE: AccountProfile = readStoredProfile()
+
 export const getAccountProfile = (): Promise<AccountProfile> =>
   withLatency({ ...PROFILE_FIXTURE })
 
@@ -457,6 +492,7 @@ export const updateAccountProfile = (
     ...payload,
     name: `${firstName} ${lastName}`.trim(),
   }
+  persistProfile()
   return withLatency({ ...PROFILE_FIXTURE })
 }
 
@@ -473,6 +509,7 @@ export const saveOnboardingPreferences = (
   if (payload.default_image_model) {
     syncAuthStoreUser({ default_image_model: payload.default_image_model })
   }
+  persistProfile()
   return withLatency({ ...PROFILE_FIXTURE })
 }
 
@@ -535,6 +572,7 @@ export const subscribeToPlan = (
     is_premium: planType !== 'FREE',
     current_subscription: { plan: planType, renews_at: renewsAt },
   }
+  persistProfile()
   const summary = buildCreditsSummary()
   syncAuthStoreUser({
     credit_summary: { amount: summary.remaining_credits, balance: summary.remaining_credits },
