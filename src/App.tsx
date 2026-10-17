@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './lib/auth'
 import { ToastProvider } from './components/Toast'
 import PlaceholderPage from './components/PlaceholderPage'
@@ -8,6 +8,20 @@ import Login from './pages/auth/Login'
 import Signup from './pages/auth/Signup'
 import VerifyEmail from './pages/auth/VerifyEmail'
 import Welcome from './pages/welcome/Welcome'
+
+// WO-2 creation core (owned routes: /app, /new-story, /story-flow, /story,
+// /new, /new-audio, /new-video-captions, /generating, /duplicate, /preview,
+// /create/:createSlug, /projects)
+import AppHome from './pages/app/AppHome'
+import NewStory from './pages/app/NewStory'
+import Generating from './pages/app/Generating'
+import StoryDetail from './pages/app/StoryDetail'
+import NewAudio from './pages/app/NewAudio'
+import NewVideoCaptions from './pages/app/NewVideoCaptions'
+import Duplicate from './pages/app/Duplicate'
+import Preview from './pages/app/Preview'
+import CreateEntry from './pages/app/CreateEntry'
+import Projects from './pages/projects/Projects'
 
 const App = () => {
   return (
@@ -24,19 +38,21 @@ const App = () => {
 
             {/* App shell routes — guarded by AuthGuard inside AppShell */}
             <Route element={<AppShell />}>
-              <Route path="/app" element={<PlaceholderPage title="App" />} />
-              <Route path="/projects" element={<PlaceholderPage title="My Stories" />} />
-              <Route path="/new-story" element={<PlaceholderPage title="New Story" />} />
-              <Route path="/story-flow" element={<PlaceholderPage title="Story Flow" />} />
-              <Route path="/story" element={<PlaceholderPage title="Story" />} />
-              <Route path="/new" element={<PlaceholderPage title="New" />} />
-              <Route path="/new-audio/:storyId" element={<PlaceholderPage title="New Audio" />} />
-              <Route path="/new-audio" element={<PlaceholderPage title="New Audio" />} />
-              <Route path="/new-video-captions" element={<PlaceholderPage title="New Video Captions" />} />
-              <Route path="/generating" element={<PlaceholderPage title="Generating" />} />
-              <Route path="/duplicate" element={<PlaceholderPage title="Duplicate" />} />
-              <Route path="/preview" element={<PlaceholderPage title="Preview" />} />
-              <Route path="/create/:createSlug" element={<PlaceholderPage title="Create" />} />
+              {/* WO-2 creation core routes */}
+              <Route path="/app" element={<AppHome />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/new-story" element={<NewStory />} />
+              <Route path="/story-flow" element={<Navigate to="/new-story" replace />} />
+              <Route path="/story/:id" element={<StoryDetail />} />
+              <Route path="/story" element={<StoryDetail />} />
+              <Route path="/new" element={<Navigate to="/app" replace />} />
+              <Route path="/new-audio/:storyId" element={<NewAudio />} />
+              <Route path="/new-audio" element={<NewAudio />} />
+              <Route path="/new-video-captions" element={<NewVideoCaptions />} />
+              <Route path="/generating" element={<Generating />} />
+              <Route path="/duplicate" element={<Duplicate />} />
+              <Route path="/preview" element={<Preview />} />
+              <Route path="/create/:createSlug" element={<CreateEntry />} />
               <Route path="/account" element={<PlaceholderPage title="Account" />} />
               <Route path="/onboarding" element={<PlaceholderPage title="Onboarding" />} />
 
