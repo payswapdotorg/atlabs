@@ -23,6 +23,28 @@ import Preview from './pages/app/Preview'
 import CreateEntry from './pages/app/CreateEntry'
 import Projects from './pages/projects/Projects'
 
+// WO-3 content surface (owned routes: /library, /library/actors, /tools,
+// and the 17 mini tool routes)
+import Library from './pages/library/Library'
+import ToolsHub from './pages/tools/ToolsHub'
+import AvatarVideo from './pages/tools/AvatarVideo'
+import LipSync from './pages/tools/LipSync'
+import Motion from './pages/tools/Motion'
+import MotionControl from './pages/tools/MotionControl'
+import ModifyVideo from './pages/tools/ModifyVideo'
+import Reframe from './pages/tools/Reframe'
+import Inpaint from './pages/tools/Inpaint'
+import Upscale from './pages/tools/Upscale'
+import Music from './pages/tools/Music'
+import Image from './pages/tools/Image'
+import Voices from './pages/tools/Voices'
+import LoraTraining from './pages/tools/LoraTraining'
+import Brand from './pages/tools/Brand'
+import Deck from './pages/tools/Deck'
+import UgcAds from './pages/tools/UgcAds'
+import ProductAdFlow from './pages/tools/ProductAdFlow'
+import PaparazziSighting from './pages/tools/PaparazziSighting'
+
 const App = () => {
   return (
     <AuthProvider>
@@ -56,29 +78,29 @@ const App = () => {
               <Route path="/account" element={<PlaceholderPage title="Account" />} />
               <Route path="/onboarding" element={<PlaceholderPage title="Onboarding" />} />
 
-              {/* Library routes */}
-              <Route path="/library" element={<PlaceholderPage title="Library" />} />
-              <Route path="/library/actors" element={<PlaceholderPage title="Library Actors" />} />
+              {/* WO-3 library routes */}
+              <Route path="/library" element={<Library />} />
+              <Route path="/library/actors" element={<Library />} />
 
-              {/* Tools routes */}
-              <Route path="/tools" element={<PlaceholderPage title="Tools" />} />
-              <Route path="/avatar-video" element={<PlaceholderPage title="Avatar Video" />} />
-              <Route path="/lip-sync" element={<PlaceholderPage title="Lip Sync" />} />
-              <Route path="/motion" element={<PlaceholderPage title="Motion" />} />
-              <Route path="/motion-control" element={<PlaceholderPage title="Motion Control" />} />
-              <Route path="/modify-video" element={<PlaceholderPage title="Modify Video" />} />
-              <Route path="/reframe" element={<PlaceholderPage title="Reframe" />} />
-              <Route path="/inpaint" element={<PlaceholderPage title="Inpaint" />} />
-              <Route path="/upscale" element={<PlaceholderPage title="Upscale" />} />
-              <Route path="/music" element={<PlaceholderPage title="Music" />} />
-              <Route path="/image" element={<PlaceholderPage title="Image" />} />
-              <Route path="/voices" element={<PlaceholderPage title="Voices" />} />
-              <Route path="/lora-training" element={<PlaceholderPage title="Lora Training" />} />
-              <Route path="/brand" element={<PlaceholderPage title="Brand" />} />
-              <Route path="/deck" element={<PlaceholderPage title="Deck" />} />
-              <Route path="/ugc-ads" element={<PlaceholderPage title="UGC Ads" />} />
-              <Route path="/product-ad-flow" element={<PlaceholderPage title="Product Ad Flow" />} />
-              <Route path="/paparazzi-sighting" element={<PlaceholderPage title="Paparazzi Sighting" />} />
+              {/* WO-3 tools routes */}
+              <Route path="/tools" element={<ToolsHub />} />
+              <Route path="/avatar-video" element={<AvatarVideo />} />
+              <Route path="/lip-sync" element={<LipSync />} />
+              <Route path="/motion" element={<Motion />} />
+              <Route path="/motion-control" element={<MotionControl />} />
+              <Route path="/modify-video" element={<ModifyVideo />} />
+              <Route path="/reframe" element={<Reframe />} />
+              <Route path="/inpaint" element={<Inpaint />} />
+              <Route path="/upscale" element={<Upscale />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/image" element={<Image />} />
+              <Route path="/voices" element={<Voices />} />
+              <Route path="/lora-training" element={<LoraTraining />} />
+              <Route path="/brand" element={<Brand />} />
+              <Route path="/deck" element={<Deck />} />
+              <Route path="/ugc-ads" element={<UgcAds />} />
+              <Route path="/product-ad-flow" element={<ProductAdFlow />} />
+              <Route path="/paparazzi-sighting" element={<PaparazziSighting />} />
 
               {/* Commerce routes */}
               <Route path="/credits" element={<PlaceholderPage title="Credits" />} />
