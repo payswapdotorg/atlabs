@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { CheckCircledIcon, RocketIcon } from '@radix-ui/react-icons'
-import AtlabsButton from '../../components/AtlabsButton'
+import { AtlabsButton } from '../../components/AtlabsButton'
 import Callout from '../../components/Callout'
 import SegmentedControl from '../../components/SegmentedControl'
 import Skeleton from '../../components/Skeleton'

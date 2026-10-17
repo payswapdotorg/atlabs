@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import AtlabsButton from '../../components/AtlabsButton'
+import { AtlabsButton } from '../../components/AtlabsButton'
 import Callout from '../../components/Callout'
 import Skeleton from '../../components/Skeleton'
 import EmptyState from '../../components/EmptyState'
@@ -94,10 +94,6 @@ const CreditsPage: React.FC = () => {
     return () => {
       cancelled = true
     }
-  }, [])
-
-  const refreshSummary = useCallback((): void => {
-    void getCreditsSummary().then(setSummary)
   }, [])
 
   const openCheckout = useCallback((pack: CreditPackage) => {

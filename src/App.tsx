@@ -45,6 +45,15 @@ import UgcAds from './pages/tools/UgcAds'
 import ProductAdFlow from './pages/tools/ProductAdFlow'
 import PaparazziSighting from './pages/tools/PaparazziSighting'
 
+// WO-4 commerce + integration (owned routes: /credits, /pricing, /subscribe,
+// /redeem, /mcp, /account, /onboarding)
+import CreditsPage from './pages/credits/CreditsPage'
+import SubscribePage from './pages/subscribe/SubscribePage'
+import RedeemPage from './pages/redeem/RedeemPage'
+import McpPage from './pages/mcp/McpPage'
+import AccountPage from './pages/account/AccountPage'
+import OnboardingPage from './pages/onboarding/OnboardingPage'
+
 const App = () => {
   return (
     <AuthProvider>
@@ -75,8 +84,8 @@ const App = () => {
               <Route path="/duplicate" element={<Duplicate />} />
               <Route path="/preview" element={<Preview />} />
               <Route path="/create/:createSlug" element={<CreateEntry />} />
-              <Route path="/account" element={<PlaceholderPage title="Account" />} />
-              <Route path="/onboarding" element={<PlaceholderPage title="Onboarding" />} />
+              <Route path="/account" element={<AccountPage />} />
+              <Route path="/onboarding" element={<OnboardingPage />} />
 
               {/* WO-3 library routes */}
               <Route path="/library" element={<Library />} />
@@ -102,14 +111,14 @@ const App = () => {
               <Route path="/product-ad-flow" element={<ProductAdFlow />} />
               <Route path="/paparazzi-sighting" element={<PaparazziSighting />} />
 
-              {/* Commerce routes */}
-              <Route path="/credits" element={<PlaceholderPage title="Credits" />} />
-              <Route path="/pricing" element={<PlaceholderPage title="Pricing" />} />
-              <Route path="/subscribe" element={<PlaceholderPage title="Subscribe" />} />
-              <Route path="/redeem" element={<PlaceholderPage title="Redeem" />} />
+              {/* Commerce routes — WO-4 */}
+              <Route path="/credits" element={<CreditsPage />} />
+              <Route path="/pricing" element={<SubscribePage />} />
+              <Route path="/subscribe" element={<SubscribePage />} />
+              <Route path="/redeem" element={<RedeemPage />} />
 
-              {/* Other routes */}
-              <Route path="/mcp" element={<PlaceholderPage title="MCP" />} />
+              {/* Other routes — WO-4 */}
+              <Route path="/mcp" element={<McpPage />} />
             </Route>
 
             <Route path="*" element={<PlaceholderPage title="404" />} />

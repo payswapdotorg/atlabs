@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { SymbolIcon } from '@radix-ui/react-icons'
-import AtlabsButton from '../../components/AtlabsButton'
+import { AtlabsButton } from '../../components/AtlabsButton'
 import Callout from '../../components/Callout'
 import IconBadge from '../../components/IconBadge'
 import { usePageHeader } from '../../AppShell'
