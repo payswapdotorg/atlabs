@@ -23,6 +23,10 @@ import Preview from './pages/app/Preview'
 import CreateEntry from './pages/app/CreateEntry'
 import Projects from './pages/projects/Projects'
 
+// WO-3 content surface (owned routes: /library, /library/actors, /tools,
+// and the 17 mini tool routes)
+import Library from './pages/library/Library'
+
 const App = () => {
   return (
     <AuthProvider>
@@ -56,9 +60,9 @@ const App = () => {
               <Route path="/account" element={<PlaceholderPage title="Account" />} />
               <Route path="/onboarding" element={<PlaceholderPage title="Onboarding" />} />
 
-              {/* Library routes */}
-              <Route path="/library" element={<PlaceholderPage title="Library" />} />
-              <Route path="/library/actors" element={<PlaceholderPage title="Library Actors" />} />
+              {/* WO-3 library routes */}
+              <Route path="/library" element={<Library />} />
+              <Route path="/library/actors" element={<Library />} />
 
               {/* Tools routes */}
               <Route path="/tools" element={<PlaceholderPage title="Tools" />} />
