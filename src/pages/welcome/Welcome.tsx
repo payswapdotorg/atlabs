@@ -36,8 +36,8 @@ const StartCard: React.FC<StartCardProps> = ({
       <span
         className={
           badgeTone === 'yellow'
-            ? 'rounded-full bg-yellow-9 px-3 py-1 text-[11px] font-bold tracking-wide text-gray-1'
-            : 'rounded-full bg-gray-12 px-3 py-1 text-[11px] font-bold tracking-wide text-gray-1'
+            ? 'rounded-full bg-yellow-9 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gray-1'
+            : 'rounded-full bg-gray-12 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gray-1'
         }
       >
         {badge}
