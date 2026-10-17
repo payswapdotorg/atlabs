@@ -151,6 +151,7 @@ const AssetsTab: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState<MediaAsset | null>(null)
   const [uploading, setUploading] = useState(false)
+  const [reloadNonce, setReloadNonce] = useState(0)
 
   useEffect(() => {
     let cancelled = false
@@ -167,7 +168,7 @@ const AssetsTab: React.FC = () => {
     return () => {
       cancelled = true
     }
-  }, [typeFilter, page])
+  }, [typeFilter, page, reloadNonce])
 
   const onFiles = async (files: File[]) => {
     if (files.length === 0) return
@@ -191,6 +192,7 @@ const AssetsTab: React.FC = () => {
     setUploading(false)
     setPage(1)
     setTypeFilter('ALL')
+    setReloadNonce((n) => n + 1)
     toast({
       title: `Uploaded ${files.length} ${files.length === 1 ? 'file' : 'files'}`,
       description: 'Your assets are now available across the Library.',

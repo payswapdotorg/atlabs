@@ -8,7 +8,6 @@ import Pagination from '../../components/Pagination'
 import Skeleton from '../../components/Skeleton'
 
 import { useToast } from '../../components/Toast'
-import { usePageHeader } from '../../AppShell'
 import {
   createCharacter,
   getCharacter,
@@ -390,7 +389,6 @@ const AddCharacterModal: React.FC<{
 /* ------------------------------------------------------------------ */
 
 const ActorsTab: React.FC = () => {
-  const { setActions } = usePageHeader()
   const [filters, setFilters] = useState<ActorFilters>(DEFAULT_FILTERS)
   const [page, setPage] = useState(1)
   const [data, setData] = useState<{ count: number; results: Character[] } | null>(null)
@@ -399,17 +397,9 @@ const ActorsTab: React.FC = () => {
   const [addOpen, setAddOpen] = useState(false)
   const [reloadNonce, setReloadNonce] = useState(0)
 
-  // "Add Character" lives in the shell header while the actors tab is active.
-  useEffect(() => {
-    setActions(
-      <AtlabsButton variant="primary" size="sm" onClick={() => setAddOpen(true)}>
-        <PlusIcon width={14} height={14} />
-        Add Character
-      </AtlabsButton>,
-    )
-    return () => setActions(null)
-  }, [setActions])
-
+  // "Add Character" lives in the tab toolbar — the shell header slot is
+  // reset by AppShell on pathname change, so a content-level button is the
+  // reliable placement.
   useEffect(() => {
     let cancelled = false
     setLoading(true)
@@ -495,6 +485,24 @@ const ActorsTab: React.FC = () => {
 
   return (
     <div>
+      {/* Tab toolbar: count + Add Character entry point */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <p className="text-sm text-gray-11">
+          {data && !loading ? (
+            <>
+              <span className="font-semibold text-gray-12">{data.count}</span>{' '}
+              {data.count === 1 ? 'actor' : 'actors'} in the library
+            </>
+          ) : (
+            'Actor library'
+          )}
+        </p>
+        <AtlabsButton variant="primary" size="sm" onClick={() => setAddOpen(true)}>
+          <PlusIcon width={14} height={14} />
+          Add Character
+        </AtlabsButton>
+      </div>
+
       {/* Filter bar */}
       <div className="flex flex-wrap items-center gap-2 py-4">
         <PageSelect
