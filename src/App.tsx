@@ -3,6 +3,11 @@ import { AuthProvider } from './lib/auth'
 import { ToastProvider } from './components/Toast'
 import PlaceholderPage from './components/PlaceholderPage'
 import AppShell from './AppShell'
+import Landing from './pages/landing/Landing'
+import Login from './pages/auth/Login'
+import Signup from './pages/auth/Signup'
+import VerifyEmail from './pages/auth/VerifyEmail'
+import Welcome from './pages/welcome/Welcome'
 
 const App = () => {
   return (
@@ -10,12 +15,12 @@ const App = () => {
       <ToastProvider>
         <BrowserRouter>
           <Routes>
-            {/* Public routes (built out in milestone 3) */}
-            <Route path="/" element={<PlaceholderPage title="Landing" />} />
-            <Route path="/login" element={<PlaceholderPage title="Login" />} />
-            <Route path="/signup" element={<PlaceholderPage title="Signup" />} />
-            <Route path="/welcome" element={<PlaceholderPage title="Welcome" />} />
-            <Route path="/verify_email" element={<PlaceholderPage title="Verify Email" />} />
+            {/* Public routes */}
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/verify_email" element={<VerifyEmail />} />
 
             {/* App shell routes — guarded by AuthGuard inside AppShell */}
             <Route element={<AppShell />}>
