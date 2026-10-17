@@ -1,75 +1,68 @@
-// Mock API client with fixtures
+/**
+ * Mock API client for the Atlabs frontend.
+ *
+ * Every network call in the app goes through this module (see AGENTS.md —
+ * pages never hardcode raw fetch URLs). Endpoints return typed fixtures
+ * after ~200ms of simulated latency so loading/error states can be built
+ * and exercised before the real backend is wired in.
+ *
+ * The endpoint inventory and response shapes are documented in
+ * docs/api-surface.md.
+ */
 
-// Mock user data
-export const mockUser = {
-  user_id: 179398,
-  username: "yaslencatty@gmail.com",
-  email: "yaslencatty@gmail.com",
-  name: "yaslen Catty",
-  user_brand_settings: {},
-  credit_summary: {
-    amount: 0,
-    balance: 0
-  },
-  is_premium: false,
-  default_image_model: "MagicX"
-}
+import type {
+  MetaResponse,
+  UserDetailsResponse,
+  UserProfileResponse,
+  UserUsageStatsResponse,
+  PaginatedStories,
+} from './types'
+import {
+  metaFixture,
+  userProfileFixture,
+  userDetailsFixture,
+  userUsageStatsFixture,
+  emptyStoriesFixture,
+} from './fixtures'
 
-// Mock API functions with simulated delay
-export const getMeta = async () => {
-  await new Promise(resolve => setTimeout(resolve, 200))
-  return {
-    location: {
-      country_code: "US",
-      country_name: "United States",
-      continent_code: "NA",
-      city: "San Francisco",
-      region: "California"
-    }
-  }
-}
+export type {
+  MetaResponse,
+  GeoLocation,
+  UserProfileResponse,
+  NotificationPreferences,
+  SubscriptionSummary,
+  CreditSummary,
+  UserDetailsResponse,
+  UserUsageStatsResponse,
+  StorySummary,
+  PaginatedStories,
+} from './types'
 
-export const getUserProfile = async () => {
-  await new Promise(resolve => setTimeout(resolve, 200))
-  return {
-    first_name: "yaslen",
-    last_name: "Catty",
-    name: "yaslen Catty",
-    email: "yaslencatty@gmail.com",
-    date_joined: "2023-10-01",
-    notification_preferences: {
-      receive_updates: true,
-      email_on_video_export: false
-    },
-    default_image_model: "MagicX",
-    is_premium: false,
-    current_subscription: null
-  }
-}
+/** Simulated network latency applied to every mock call. */
+const MOCK_LATENCY_MS = 200
 
-export const getUserDetails = async () => {
-  await new Promise(resolve => setTimeout(resolve, 200))
-  return {
-    ...mockUser,
-    pusher_id: "1234567890"
-  }
-}
+const withLatency = <T>(payload: T): Promise<T> =>
+  new Promise((resolve) =>
+    window.setTimeout(() => resolve(payload), MOCK_LATENCY_MS),
+  )
 
-export const getUserUsageStats = async () => {
-  await new Promise(resolve => setTimeout(resolve, 200))
-  return {
-    credits_used: 0,
-    stories_exported: 0,
-    successful_mini_app_requests: 0
-  }
-}
+/** GET meta/ — request-scoped geo metadata. */
+export const getMeta = (): Promise<MetaResponse> => withLatency(metaFixture)
 
-export const getStories = async (_page = 1, _pageSize = 5) => {
-  await new Promise(resolve => setTimeout(resolve, 200))
-  return {
-    count: 0,
-    next: null,
-    previous: null,
-    results: []
-  }
-}
+/** GET user_profile/ — editable profile fields + preferences. */
+export const getUserProfile = (): Promise<UserProfileResponse> =>
+  withLatency(userProfileFixture)
+
+/** GET get_user_details/ — localStorage "user" shape plus pusher_id. */
+export const getUserDetails = (): Promise<UserDetailsResponse> =>
+  withLatency(userDetailsFixture)
+
+/** GET get_user_usage_stats/ — lifetime usage counters. */
+export const getUserUsageStats = (): Promise<UserUsageStatsResponse> =>
+  withLatency(userUsageStatsFixture)
+
+/** GET story/?page=<n>&page_size=<n> — DRF-paginated story list. */
+export const getStories = (
+  _page = 1,
+  _pageSize = 5,
+): Promise<PaginatedStories> => withLatency(emptyStoriesFixture)
